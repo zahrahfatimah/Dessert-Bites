@@ -96,7 +96,7 @@ export default function RegisPage({ url }) {
           className="w-1/2 bg-cover bg-center"
           style={{
             backgroundImage:
-              "url('https://www.tasteofhome.com/wp-content/uploads/2020/03/Berry-Cool-Cream-and-Pretzel-Pie_EXPS_TOHJJ20_242812_E02_05_6b.jpg')",
+              "url('https://i.pinimg.com/474x/93/65/aa/9365aa79d798dce881d9b743e186172a.jpg')",
           }}
         ></div>
       </div>
