@@ -1,0 +1,149 @@
+[
+  {
+    "sourceName": "Es Krim Vanila",
+    "pricePerServing": 8.000,
+    "notes": "Rasanya creamy, cocok buat dessert yang harga nya murah hahaha",
+    "healthScore": 50,
+    "userId": 2
+  },
+  {
+    "sourceName": "Choco Sundae",
+    "pricePerServing": 5.000,
+    "notes": "ini enak banget harus beli lagi sama doi",
+    "healthScore": 70,
+    "userId": 1
+  },
+  {
+    "sourceName": "Strawberry Cheesecake",
+    "pricePerServing": 12.000,
+    "notes": "pertama kali banget nyobain Cheesecake dengan topping strawberry ternyata masuk banget rasanya",
+    "healthScore": 25,
+    "userId": 2
+  },
+  {
+    "sourceName": "Tiramisu",
+    "pricePerServing": 15.000,
+    "notes": "the best sih ini bakal beli lagi ga si?",
+    "healthScore": 80,
+    "userId": 1
+  },
+  {
+    "sourceName": "Panna Cotta",
+    "pricePerServing": 18.000,
+    "notes": "Panna cotta dengan saus berry ternyata ga buruk2 banget",
+    "healthScore": 65,
+    "userId": 2
+  },
+  {
+    "sourceName": "Brownies",
+    "pricePerServing": 10.000,
+    "notes": "Brownies cokelat kesukaan nisa ini mah",
+    "healthScore": 100,
+    "userId": 1
+  },
+  {
+    "sourceName": "Lemon Tart",
+    "pricePerServing": 14.000,
+    "notes": "Tart lemon segar dengan tekstur krimi cocok sih buat di jadiin hadiah",
+    "healthScore": 90,
+    "userId": 2
+  },
+  {
+    "sourceName": "Macaron",
+    "pricePerServing": 8.000,
+    "notes": "ga terlalu suka tapi bole lah , worth to try one in a life",
+    "healthScore": 20,
+    "userId": 1
+  },
+  {
+    "sourceName": "Crème Brûlée",
+    "pricePerServing": 20.000,
+    "notes": "lapisan karamel yang renyah banget sukaaaa",
+    "healthScore": 100,
+    "userId": 2
+  },
+  {
+    "sourceName": "Apple Pie",
+    "pricePerServing": 12.000,
+    "notes": "Pai apel cocok banget kalo masih hangat ",
+    "healthScore": 26,
+    "userId": 1
+  },
+  {
+    "sourceName": "Churros",
+    "pricePerServing": 9.000,
+    "notes": "Churros yang digulung dengan gula dan kayu manis",
+    "healthScore": 21,
+    "userId": 2
+  },
+  {
+    "sourceName": "Coconut Panna Cotta",
+    "pricePerServing": 17.000,
+    "notes": "Panna cotta dengan rasa kelapa",
+    "healthScore": 24,
+    "userId": 1
+  },
+  {
+    "sourceName": "Mango Sticky Rice",
+    "pricePerServing": 13.000,
+    "notes": "Nasi ketan dengan mangga segar dan santan jujur ga begitu suka mangga hehe",
+    "healthScore": 25,
+    "userId": 2
+  },
+  {
+    "sourceName": "Raspberry Sorbet",
+    "pricePerServing": 11.000,
+    "notes": "parah Sorbet raspberry dingin seenak itu",
+    "healthScore": 80,
+    "userId": 1
+  },
+  {
+    "sourceName": "Red Velvet Cake",
+    "pricePerServing": 16.000,
+    "notes": "Kue red velvet dengan krim keju walopun krim keju nya dikit bangt:(",
+    "healthScore": 29,
+    "userId": 2
+  },
+  {
+    "sourceName": "Peach Cobbler",
+    "pricePerServing": 14.000,
+    "notes": "Cobbler persik dengan topping remah",
+    "healthScore": 23,
+    "userId": 1
+  },
+  {
+    "sourceName": "Almond Cake",
+    "pricePerServing": 15.000,
+    "notes": "Kue almond lembut dengan taburan almond",
+    "healthScore": 26,
+    "userId": 2
+  },
+  {
+    "sourceName": "Gelato",
+    "pricePerServing": 10.000,
+    "notes": "Gelato Italia dengan berbagai rasa yang paling enak cookies and cream",
+    "healthScore": 19,
+    "userId": 1
+  },
+  {
+    "sourceName": "Fig Tart",
+    "pricePerServing": 18.000,
+    "notes": "Tart buah ara dengan krim vanila",
+    "healthScore": 28,
+    "userId": 2
+  },
+  {
+    "sourceName": "Chocolate Fondue",
+    "pricePerServing": 22.000,
+    "notes": "Fondue cokelat dengan buah-buahan segar rasa nya agak asing di lidah ku",
+    "healthScore": 32,
+    "userId": 1
+  },
+  {
+    "sourceName": "Custard",
+    "pricePerServing": 12.000,
+    "notes": "Custard vanila lembut dan creamy mirip buatan nenek",
+    "healthScore": 21,
+    "userId": 2
+  }
+]
