@@ -65,7 +65,7 @@ export default function Nav() {
                 d="M3 7V5c0-1.104.897-2 2-2h14c1.104 0 2 .896 2 2v2"
               ></path>
             </svg>
-            Nutrition Check
+            Dessert Info
           </Link>
           <a
             onClick={handleLogout}

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Toastify from "toastify-js";
-import { Link } from "react-router-dom"; 
-import { FaTrash } from "react-icons/fa"; 
+import { Link } from "react-router-dom";
+import { FaTrash, FaQuestionCircle } from "react-icons/fa";
 
 export default function MyCollection({ url }) {
   const [collection, setCollection] = useState([]);
@@ -89,16 +89,23 @@ export default function MyCollection({ url }) {
                 Price: {recipe.pricePerServing}
               </p>
               <p className="text-lg mb-2 text-black">Notes: {recipe.notes}</p>
-              <p className="text-lg text-black">
-                Rating: {recipe.healthScore}
-              </p>
-              {/* Tambahkan ikon tempat sampah */}
-              <button 
+              <p className="text-lg text-black">Rating: {recipe.healthScore}</p>
+              <button
                 onClick={() => handleDelete(recipe.id)}
                 className="absolute top-4 right-4 text-red-600 hover:text-red-800"
               >
                 <FaTrash />
               </button>
+              {/* Tambahkan Link dengan icon tanda tanya */}
+              <Link
+                to="/location"
+                className="absolute bottom-4 right-4 text-[#A87676] hover:text-[#E1ACAC] flex items-center"
+              >
+                <FaQuestionCircle className="mr-2 group-hover:block" />
+                <span className="hidden group-hover:block text-sm bg-white text-black p-2 rounded-lg">
+                  ingin mencari cafe terdekat yang memiliki menu dessert ini ?
+                </span>
+              </Link>
             </div>
           ))
         ) : (

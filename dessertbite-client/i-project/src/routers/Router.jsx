@@ -7,18 +7,23 @@ import DessertList from "../views/Home";
 import BaseLayout from "../views/BaseLayout";
 import MyCollection from "../views/MyCollection";
 import RegisPage from "../views/Register";
-import Nutrition from "../views/NutritionCheckPage";
-
+// import Nutrition from "../views/NutritionCheckPage";
+import Location from "../views/LocationCheck";
+import DessertInfo from "../views/DessertInfoPage";
 const URL = "http://localhost:3000";
 
 const router = createBrowserRouter([
   {
-    path: "/register",
-    element:<RegisPage url={URL}/>
-  },
-  {
     path: "/",
     element: <LandingPage url={URL} />,
+  },
+  {
+    path: "/register",
+    element: <RegisPage url={URL} />,
+  },
+  {
+    path: "location",
+    element: <Location url={URL} />,
   },
   {
     path: "/login",
@@ -65,7 +70,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/nutrition",
-        element: <Nutrition url={URL} />,
+        element: <DessertInfo url={URL} />,
       },
     ],
   },
