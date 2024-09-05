@@ -296,19 +296,46 @@ Response (401 - Forbidden)
 ### Landing page
 
 - menampilkan Overview aplikasi `Dessert Bite`
-  ![alt text](/assets/landing%20page.png)
+- button `get started` akan langsung menuju ke halaman home / public
+  ![alt text](/assets/landingP.png)
 
-# Sign Up / Register page
+## Public Page / Fitur utama nya
+
+- menggunakan fitur gemini Ai untuk mencari cafe sekitar jakarta yang mungkin memiki menu yang di masukkan di input contoh "starawberry cream"
+  ![alt text](/assets/publicP.png)
+
+- dan akan menampilkan hasil pencarian berupa nama kafe, deskripsi kafe, dan nama menu yang kafe tersebut miliki
+  ![alt text](/assets/publicP2.png)
+
+
+# Sign Up  page
 
 - User yang belum pernah login harus register terlebih dahulu dengan mengisi form input username, email dan password
-  ![alt text](/assets/register%20page.png)
+  ![alt text](/assets/regisP.png)
 
-# Sign In / Login page
+## Sign In  page
 
 - User yang sudah pernah login hanya perlu login dengan email dan password saat register
-  ![alt text](/assets/login%20page.png)
+  ![alt text](/assets/loginP.png)
 
-# Dessert Library / Home page
+## Dessert Library Page
 
-- User yang telah login dapat melihat kumpulan dessert dalam bentuk card dari data API
-  ![alt text](/assets/home%20page.png)
+- User yang telah login dapat melihat kumpulan dessert dalam bentuk card dari data API 
+  ![alt text](/assets/recommendP.png)
+
+## Dessert Info Page
+
+- Halaman untuk mengecek informasi nutrisi dan informasi resep dengan menganalisa gambar dessert yang di upload
+  ![alt text](/assets/infoP.png)
+- Nutrition facts berisi perkiraan informasi detail dari gambar dessert yang di upload berupa kalori protein dll.
+  ![alt text](/assets/infoP2.png)
+- Top 5 Dessert recipes berisi nama menu yang mirip/serupa dengan dessert yang di upload dan link untuk mengecek resep nya
+  ![alt text](/assets/infoP3.png)
+
+
+## My Collection Page
+- menampilkan kumpulan catatan yang User pernah buat sebelum nya
+- cacatan tentang dessert yang di coba hari ini in case some day 
+mau di cobain lagi (sebenarnya ini sih hobby ku)
+- User bisa menambah catatan dan menghapus catatan
+  ![alt text](/assets/notesP.png)
