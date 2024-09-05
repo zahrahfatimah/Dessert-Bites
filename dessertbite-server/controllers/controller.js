@@ -2,40 +2,46 @@ const axios = require("axios");
 const { User, RecipeInformation } = require("../models");
 const { compare } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
-const gemini = require("../helpers/gemini");
-// const cloudinary = require('../helpers/claudinary')
 const { OAuth2Client } = require("google-auth-library");
+const { where } = require("sequelize");
+// const { GoogleGenerativeAI } = require("@google/generative-ai");
+// const { GoogleAIFileManager } = require("@google/generative-ai/server");
+
+// const apiKey = process.env.GOOGLE_AI_KEY;
+// const genAI = new GoogleGenerativeAI(apiKey);
+// const fileManager = new GoogleAIFileManager(apiKey);
 
 class Controller {
   static async googleLogin(req, res, next) {
     try {
       const { google_token } = req.headers;
 
-      const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+      const client = new OAuth2Client();
 
       const ticket = await client.verifyIdToken({
         idToken: google_token,
         audience: process.env.GOOGLE_CLIENT_ID,
+        // audience:
       });
 
       const payload = ticket.getPayload();
+      console.log(payload, "<<<<< payload");
 
       const [user, created] = await User.findOrCreate({
         where: {
           email: payload.email,
         },
         defaults: {
-          // username: payload.username,
-          email: payload.email,
+          username: payload.email,
           password: "password_google",
         },
         hooks: false,
       });
 
-      const accessToken = createToken({
+      const accessToken = signToken({
         id: user.id,
+        username: user.username,
         email: user.email,
-        // email: user.email
       });
 
       res.status(200).json({ accessToken });
@@ -69,6 +75,7 @@ class Controller {
       res.send(data);
     } catch (error) {
       console.error(error);
+      next(error);
     }
   }
 
@@ -104,13 +111,15 @@ class Controller {
       });
     } catch (error) {
       console.log(error);
-      // next()
+      next(error);
     }
   }
 
   static async addUser(req, res, next) {
     try {
       const { username, email, password, role } = req.body; //(?)
+
+      if (!email || !password) throw { name: "InvalidLogin" };
 
       const user = await User.create({ username, email, password, role });
       res.status(201).json({
@@ -119,7 +128,7 @@ class Controller {
       });
     } catch (error) {
       console.log(error);
-      //  next(error)
+      next(error);
     }
   }
 
@@ -139,7 +148,7 @@ class Controller {
       // console.log(recipe, '<<<< di controller');
     } catch (error) {
       console.log(error);
-      // next(error)
+      next(error);
     }
   }
 
@@ -161,16 +170,14 @@ class Controller {
       });
     } catch (error) {
       console.log(error);
-      // next(error)
+      next(error);
     }
   }
 
   static async deleteRecipe(req, res, next) {
     try {
       const { id } = req.params;
-      // console.log(req.params, '<<<<<<');
 
-      // console.log(id);
       const recipe = await RecipeInformation.findByPk(id);
 
       if (!recipe) {
@@ -189,20 +196,57 @@ class Controller {
     } catch (error) {
       console.log(error);
 
-      // next(error)
+      next(error);
     }
   }
 
-  static async uploadDessergt(req, res, next) {
+  static async getRecipeById(req, res, next) {
     try {
-      const { dessertName } = req.body;
-      const data = await gemini(dessertName);
-      res.status(200).json(data);
+      const { id } = req.params;
+
+      // Validasi apakah id ada dan merupakan angka
+      if (!id || isNaN(id)) {
+        return res.status(400).json({ error: "Invalid or missing ID" });
+      }
+
+      const recipe = await RecipeInformation.findByPk(id);
+
+      if (!recipe) {
+        return res.status(404).json({ error: "Recipe not found" });
+      }
+
+      res.status(200).json({ recipe });
+    } catch (error) {
+      console.error("Error fetching recipe:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+
+  static async updateRecipeById(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { sourceName, pricePerServing, notes, healthScore } = req.body;
+      const recipe = await RecipeInformation.findByPk(id);
+      if (!recipe) {
+        return res.status(404).json({ message: "Recipe not found" });
+      }
+      await RecipeInformation.update(
+        {
+          sourceName,
+          pricePerServing,
+          notes,
+          healthScore,
+        },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+      res.status(200).json({ message: "succes update notes mu" });
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        message: "Interna server error",
-      });
+      next();
     }
   }
 }
