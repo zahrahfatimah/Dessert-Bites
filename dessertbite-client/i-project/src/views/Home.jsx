@@ -1,73 +1,78 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import Toastify from "toastify-js";
-import "@fontsource/dancing-script"; 
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-export default function DessertList() {
-  const [desserts, setDesserts] = useState([]);
+export default function Home({ url }) {
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  // const { id } = useParams();
+
+  async function fetchRecipe(sourceName) {
+    try {
+      const genAI = new GoogleGenerativeAI(
+        `AIzaSyDL1Tj_j5iqPvX2IhdtRf57K82BFAs65k8`
+      );
+
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+      const prompt = `Give me some names of cafes in Jakarta that sell ${sourceName} in order from number 1 onwards.`;
+
+      const result = await model.generateContent(prompt);
+      const text = result.response.text();
+      console.log(result.response.text());
+
+      setSuggestions(text);
+    } catch (error) {
+      setError(`Failed to fetch suggestions`);
+      console.log(error);
+    }
+  }
+
+  async function Recipes() {
+    try {
+      setLoading(true);
+      const response = await axios.get(`${url}/recipe`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+      console.log(response, "Response from API"); // Cek respons dari API
+      if (response.data.recipe) {
+        setRecipes(response.data.recipe);
+        await fetchRecipe(response.data.recipe.sourceName);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setError("Failed to load recipes.");
+    } finally {
+      setLoading(false); // Pastikan loading di-set false
+    }
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        // const response = await axios.get(
-        //   "https://the-birthday-cake-db.p.rapidapi.com/",
-        //   {
-        //     headers: {
-        //       "x-rapidapi-key":
-        //         "2f65806f71msh08642d52c493d1ap15c3adjsn8941a614a5e2",
-        //       "x-rapidapi-host": "the-birthday-cake-db.p.rapidapi.com",
-        //     },
-        //   }
-        // );
-
-        // const data = response.data;
-
-        if (Array.isArray(data)) {
-          setDesserts(data);
-        } else {
-          console.error("Expected an array but got:", data);
-          Toastify({
-            text: "Unexpected data format from API",
-            style: {
-              background: "linear-gradient(to right, #A87676, #FFD0D0)",
-            },
-          }).showToast();
-        }
-      } catch (error) {
-        console.error(error);
-        Toastify({
-          text: `Error fetching data`,
-          style: {
-            background: "linear-gradient(to right, #A87676, #FFD0D0)",
-          },
-        }).showToast();
-      }
-    }
-    fetchData();
+    Recipes();
   }, []);
 
   return (
-    <div className="bg-[#A87676]">
-      <main className="p-8">
-        <h1 className="text-4xl font-bold text-center mb-8 font-[Dancing Script] text-white">
-          Desserts Library
-        </h1>
-        <div className="dessert-list flex flex-wrap gap-8 justify-center">
-          {desserts.map((dessert) => (
-            <div
-              className="card bg-transparent p-4 shadow border-2 border-white rounded w-72"
-              key={dessert.title}
-            >
-              <img
-                src={dessert.image || "https://via.placeholder.com/150"}
-                alt={dessert.title}
-                className="w-full h-48 object-cover rounded mb-4"
-              />
-              <h2 className="text-2xl font-light text-white">{dessert.title}</h2>
-            </div>
-          ))}
+    <>
+      {loading ? (
+        <div>
+          <h1>Loading .. </h1>
         </div>
-      </main>
-    </div>
+      ) : error ? (
+        <div>
+          <p className="text-red-500">{error}</p>
+        </div>
+      ) : (
+        <div>
+          <p>{recipes.sourceName}</p>
+          <p>Here are some cafes that have this dessert:</p>
+          {suggestions}
+        </div>
+      )}
+    </>
   );
 }

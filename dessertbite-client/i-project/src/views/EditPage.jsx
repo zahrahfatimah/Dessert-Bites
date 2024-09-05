@@ -1,22 +1,51 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
-import Toastify from 'toastify-js';
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Toastify from "toastify-js";
+import { useNavigate, useParams } from "react-router-dom";
 
-const AddPage = ({ url }) => {
+const EditPage = ({ url }) => {
   const [sourceName, setSourceName] = useState("");
   const [pricePerServing, setPricePerServing] = useState("");
   const [notes, setNotes] = useState("");
   const [healthScore, setHealthScore] = useState("");
-  const [userId, setUserId] = useState("");
-
+  const [userId, setUserId] = useState(""); // optional if you need it
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  async function handleAddNotes() {
+  // Fetch existing data when the component mounts
+  useEffect(() => {
+    async function fetchRecipeData() {
+      try {
+        const response = await axios.get(`${url}/recipe/${id}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
+        });
+        const { sourceName, pricePerServing, notes, healthScore, userId } = response.data;
+
+        // Set the state with the fetched data
+        setSourceName(sourceName || "");
+        setPricePerServing(pricePerServing || "");
+        setNotes(notes || "");
+        setHealthScore(healthScore || "");
+        setUserId(userId || "");
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        Toastify({
+          text: `Failed to fetch recipe: ${error.message}`,
+          style: {
+            background: "linear-gradient(to right, #A87676, #FFD0D0)",
+          },
+        }).showToast();
+      }
+    }
+
+    fetchRecipeData();
+  }, [id, url]);
+
+  async function handleEditNotes() {
     try {
       const data = { sourceName, pricePerServing, notes, healthScore, userId };
-      const response = await axios.post(`${url}/recipe`, data, {
-        headers: { Authorization: `Bearer ${localStorage.accessToken}` }
+      await axios.put(`${url}/recipe/${id}`, data, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
       });
 
       Toastify({
@@ -37,66 +66,22 @@ const AddPage = ({ url }) => {
     }
   }
 
-  // async function handleDelete() {
-  //   try {
-  //     await axios.delete(`${url}/recipe/${recipeId}`, {
-  //       headers: { Authorization: `Bearer ${localStorage.accessToken}` }
-  //     });
-
-  //     Toastify({
-  //       text: "Deleted Dessert Info",
-  //       duration: 2000,
-  //       newWindow: true,
-  //       close: true,
-  //       gravity: "bottom",
-  //       position: "right",
-  //       stopOnFocus: true,
-  //       style: {
-  //         background: "#EF4C54",
-  //         color: "#17202A",
-  //         boxShadow: "0 5px 10px black",
-  //         fontWeight: "bold"
-  //       }
-  //     }).showToast();
-  //     navigate("/myCollection");
-  //   } catch (error) {
-  //     console.error("Failed to delete the data:", error);
-  //     Toastify({
-  //       text: 'Failed to Delete Dessert Info',
-  //       duration: 2000,
-  //       newWindow: true,
-  //       close: true,
-  //       gravity: "bottom",
-  //       position: "right",
-  //       stopOnFocus: true,
-  //       style: {
-  //         background: "#EF4C54",
-  //         color: "#17202A",
-  //         boxShadow: "0 5px 10px black",
-  //         fontWeight: "bold"
-  //       }
-  //     }).showToast();
-  //   }
-  // }
-
   async function handleSubmit(e) {
-    try {
-      e.preventDefault();
-      await handleAddNotes();
-    } catch (error) {
-      console.error(error);
-    }
+    e.preventDefault();
+    await handleEditNotes();
   }
 
   return (
     <div className="flex justify-center items-center h-screen bg-[#FFD0D0]">
       <div className="w-1/2 bg-[#A87676] p-10 rounded shadow-md">
         <h2 className="text-2xl font-bold mb-5 text-center text-gray-700">
-          Save your favorite dessert to your collection
+          Edit your notes
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Name:</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Name:
+            </label>
             <input
               type="text"
               autoComplete="off"
@@ -107,7 +92,9 @@ const AddPage = ({ url }) => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Price:</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Price:
+            </label>
             <input
               type="number"
               autoComplete="off"
@@ -118,7 +105,9 @@ const AddPage = ({ url }) => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Notes:</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Notes:
+            </label>
             <textarea
               rows="4"
               autoComplete="off"
@@ -129,7 +118,9 @@ const AddPage = ({ url }) => {
             ></textarea>
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Rating:</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Rating:
+            </label>
             <input
               type="number"
               autoComplete="off"
@@ -138,19 +129,13 @@ const AddPage = ({ url }) => {
               onChange={(e) => setHealthScore(e.target.value)}
               value={healthScore}
             />
-            {/* <div className="mt-2 text-sm text-gray-700">
-              wanna know this dessert nutrition and what the health score is?{" "}
-              <button
-                type="button"
-                className="hover:underline text-gray-700"
-              >
-                Ask me
-              </button>
-            </div> */}
           </div>
           <div>
-            <button type="submit" className="w-full p-2 bg-[#E1ACAC] text-white rounded hover:bg-[#D19696]">
-              Add to your collection
+            <button
+              type="submit"
+              className="w-full p-2 bg-[#E1ACAC] text-white rounded hover:bg-[#D19696]"
+            >
+              save changes?
             </button>
           </div>
         </form>
@@ -159,4 +144,4 @@ const AddPage = ({ url }) => {
   );
 };
 
-export default AddPage;
+export default EditPage;

@@ -96,7 +96,7 @@ export default function RegisPage({ url }) {
           className="w-1/2 bg-cover bg-center"
           style={{
             backgroundImage:
-              "url('https://i.pinimg.com/474x/93/65/aa/9365aa79d798dce881d9b743e186172a.jpg')",
+              "url('https://i.pinimg.com/474x/12/c9/58/12c9585085da28925702d9f1222da970.jpg')",
           }}
         ></div>
       </div>

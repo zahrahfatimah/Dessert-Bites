@@ -30,7 +30,7 @@ export default function LandingPage() {
           </p>
 
           <Link
-            to="/login"
+            to="/home"
             className="border border-[#B47B84] text-[#B47B84] py-2 px-4 rounded-full text-center font-semibold hover:bg-[#B47B84] hover:text-white transition duration-300"
           >
             Get Started

@@ -1,73 +1,56 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+// import { GoogleGenerativeAI } from "@google/generative-ai";
+import axios from "axios";
 
 const initialState = {
   cafes: [],
-  loading: false,
-  error: "",
+  isLoading: false,
+  errorMsg: "",
 };
-
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GOOGLE_CLIENT_ID);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 export const cafeSlice = createSlice({
   name: "cafe",
   initialState,
   reducers: {
     fetchPending(state) {
-      state.loading = true;
+      state.isLoading = true;
       state.cafes = [];
-      state.error = "";
+      state.errorMsg = "";
     },
     fetchSuccess(state, action) {
-      state.loading = false;
+      state.isLoading = false;
       state.cafes = action.payload;
-      state.error = "";
+      state.errorMsg = "";
     },
     fetchReject(state, action) {
-      state.loading = false;
+      state.isLoading = false;
       state.cafes = [];
-      state.error = action.payload;
+      state.errorMsg = action.payload;
     },
   },
 });
 
 export const { fetchPending, fetchSuccess, fetchReject } = cafeSlice.actions;
-const validateCafesData = (data) => {
-  return (
-    Array.isArray(data) &&
-    data.every(
-      (cafe) =>
-        typeof cafe.cafe_name === "string" &&
-        typeof cafe.cheesecake_type === "string"
-    )
-  );
-};
 
-export const fetchCafesAsync = (menuItem) => async (dispatch) => {
+export const fetchCafesAsync = () => async (dispatch,) => {
   try {
     dispatch(fetchPending());
 
-    const response = await model.generate({
-      prompt: `Berikan saya beberapa nama kafe di Jakarta yang menjual ${menuItem} dalam format JSON seperti ini: [
-              {
-                "cafe_name": "Nama Kafe",
-                "link_location": "link melihat lokasi nya"
-              }
-            ]`,
-    });
+    // const response = await axios.get(
+    //   "https://the-birthday-cake-db.p.rapidapi.com/",
+    //   {
+    //     headers: {
+    //       "x-rapidapi-key":
+    //         "2f65806f71msh08642d52c493d1ap15c3adjsn8941a614a5e2",
+    //       "x-rapidapi-host": "the-birthday-cake-db.p.rapidapi.com",
+    //     },
+    //   }
+    // );
 
-    if (response && response.data) {
-      const cafes = JSON.parse(response.data);
-      if (validateCafesData(cafes)) {
-        dispatch(fetchSuccess(cafes));
-      } else {
-        throw new Error("Data format is invalid");
-      }
-    } else {
-      throw new Error("Unexpected response structure");
-    }
+    dispatch(fetchSuccess(response.data));
   } catch (error) {
+    console.log(error.message);
+
     dispatch(fetchReject(error.message));
   }
 };

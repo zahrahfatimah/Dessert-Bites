@@ -1,14 +1,14 @@
 import { createBrowserRouter, redirect } from "react-router-dom";
 import Toastify from "toastify-js";
 import LoginPage from "../views/Login";
-import AddPage from "../views/AddPage"; // Import AddPage
+import AddPage from "../views/AddPage";
+import EditPage from "../views/EditPage";
 import LandingPage from "../views/LandingPage";
-import DessertList from "../views/Home";
+import Home from "../views/Home";
 import BaseLayout from "../views/BaseLayout";
 import MyCollection from "../views/MyCollection";
 import RegisPage from "../views/Register";
-// import Nutrition from "../views/NutritionCheckPage";
-import Location from "../views/LocationCheck";
+import DessertList from "../views/DesserRecommendation";
 import DessertInfo from "../views/DessertInfoPage";
 const URL = "http://localhost:3000";
 
@@ -21,9 +21,10 @@ const router = createBrowserRouter([
     path: "/register",
     element: <RegisPage url={URL} />,
   },
+
   {
-    path: "location",
-    element: <Location url={URL} />,
+    path: "/home",
+    element: <Home url={URL} />,
   },
   {
     path: "/login",
@@ -57,7 +58,7 @@ const router = createBrowserRouter([
     },
     children: [
       {
-        path: "/home",
+        path: "/recommandation",
         element: <DessertList url={URL} />,
       },
       {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: "/nutrition",
         element: <DessertInfo url={URL} />,
+      },
+      {
+        path: "/recipe/yes/:id",
+        element: <EditPage url={URL} />,
       },
     ],
   },
