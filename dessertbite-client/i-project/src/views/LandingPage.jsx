@@ -24,7 +24,7 @@ export default function LandingPage() {
           </p>
 
           <p className="text-[#B47B84]">
-            "Delicious dessert recommendations, Nutritions informations, Dessert
+            "Looking for some dessert Cafes, Delicious dessert recommendations, Nutritions informations, Dessert
             Recipe, and Cute notes to save your happy moment of your favorite
             dessert"
           </p>

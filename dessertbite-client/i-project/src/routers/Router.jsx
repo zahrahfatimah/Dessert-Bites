@@ -37,7 +37,7 @@ const router = createBrowserRouter([
             background: "linear-gradient(to right, #A87676, #FFD0D0)",
           },
         }).showToast();
-        return redirect("/home");
+        return redirect("/recommandation");
       }
       return null;
     },

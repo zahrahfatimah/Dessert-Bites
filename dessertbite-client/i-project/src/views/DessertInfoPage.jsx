@@ -11,24 +11,24 @@ export default function DessertInfo() {
   };
 
   const handleUpload = async () => {
-    // if (!selectedFile) {
-    //   setError("Please select a file first");
-    //   return;
-    // }
+    if (!selectedFile) {
+      setError("Please select a file first");
+      return;
+    }
 
-    // const data = new FormData();
-    // data.append("file", selectedFile);
+    const data = new FormData();
+    data.append("file", selectedFile);
 
-    // const options = {
-    //   method: "POST",
-    //   url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/images/analyze",
-    //   headers: {
-    //     "x-rapidapi-key": "2f65806f71msh08642d52c493d1ap15c3adjsn8941a614a5e2",
-    //     "x-rapidapi-host":
-    //       "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-    //   },
-    //   data: data,
-    // };
+    const options = {
+      method: "POST",
+      url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/images/analyze",
+      headers: {
+        "x-rapidapi-key": "2f65806f71msh08642d52c493d1ap15c3adjsn8941a614a5e2",
+        "x-rapidapi-host":
+          "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
+      },
+      data: data,
+    };
     try {
       const response = await axios.request(options);
       const firstFiveRecipes = response.data.recipes.slice(0, 5); // Mengambil 5 resep pertama
@@ -53,11 +53,12 @@ export default function DessertInfo() {
       setNutritionData(null);
     }
   };
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-[#A87676]">
-      <div className="text-center p-8 bg-white rounded-lg shadow-lg w-full max-w-lg">
+      <div className="text-center p-8 bg-white rounded-lg shadow-lg w-full max-w-4xl h-[500px] overflow-auto">
         <h1 className="text-2xl font-bold text-[#A87676] mb-6">
-          Upload Dessert Picture to Get Nutrition & Recipe Information
+          Upload Your Dessert Picture to Get Nutrition & Recipe Information
         </h1>
         <input
           type="file"
@@ -72,7 +73,7 @@ export default function DessertInfo() {
         </button>
         {error && <div className="text-red-500 mt-4">{error}</div>}
         {nutritionData && (
-          <div className="mt-6 p-6 bg-gray-50 rounded-lg shadow-md text-left">
+          <div className="mt-6 p-6 bg-gray-50 rounded-lg shadow-md text-left h-full overflow-y-auto">
             <h2 className="text-xl font-bold text-[#A87676] mb-4">Nutrition Facts</h2>
             <p className="text-gray-800 mb-2">
               <strong>Dessert Name:</strong> {nutritionData.dessertName}
@@ -90,7 +91,7 @@ export default function DessertInfo() {
               <strong>Fat:</strong> {nutritionData.fat} g
             </p>
             <h2 className="text-xl font-bold text-[#A87676] mb-4">
-              Top 5 Dessert Recipes
+              Top 5 Dessert Recipes Similar
             </h2>
             {nutritionData.recipes.map((recipe, index) => (
               <div key={index} className="mb-4">
@@ -99,17 +100,14 @@ export default function DessertInfo() {
                   href={recipe.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline"
+                  className="text-black hover:underline"
                 >
-                  Check the recipe
+                  Click here for more
                 </a>
               </div>
             ))}
           </div>
         )}
-      </div>
-      <div className="text-center p-8 bg-white rounded-lg shadow-lg w-full max-w-lg">
-        <img src="" alt="" />
       </div>
     </div>
   );

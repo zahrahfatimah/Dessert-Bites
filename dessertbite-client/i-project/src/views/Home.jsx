@@ -151,14 +151,8 @@ export default function Home({ url }) {
             </Link>
           </div>
 
-          <div className="p-8 text-center mb-8">
-            <p className="text-[#A87676] text-lg font-bold">
-              Here are some nearest cafes that might have this dessert:
-            </p>
-          </div>
-
           {/* Input untuk memasukkan source name */}
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center mt-10">
             <input
               type="text"
               value={sourceName}
@@ -172,6 +166,12 @@ export default function Home({ url }) {
             >
               Search
             </button>
+          </div>
+
+          <div className="p-8 text-center">
+            <p className="text-[#A87676] text-lg font-bold">
+              Here are some cafes around that might have dessert you rae looking for:
+            </p>
           </div>
 
           {/* Menampilkan hasil suggestion */}

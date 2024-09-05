@@ -11,7 +11,7 @@ export default function Nav() {
   return (
     <>
       <nav className="bg-[#E1ACAC] shadow p-4 flex justify-between items-center">
-        <Link to="/home" className="text-xl font-bold text-white">
+        <Link to="/recommandation" className="text-xl font-bold text-white">
           Hi dessert lovers!
         </Link>
         <div className="flex items-center space-x-4">
@@ -41,7 +41,7 @@ export default function Nav() {
             </svg>
             My Collection
           </Link>
-          <Link
+          {/* <Link
             to="/recommandation"
             className="text-white hover:text-black flex items-center"
           >
@@ -66,7 +66,7 @@ export default function Nav() {
               ></path>
             </svg>
             Dessert Reccomendation
-          </Link>
+          </Link> */}
           <Link
             to="/nutrition"
             className="text-white hover:text-black flex items-center"
