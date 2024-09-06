@@ -25,7 +25,7 @@ export default function LoginPage({ url }) {
       );
       console.log(data); // Log response dari server
       localStorage.setItem("accessToken", data.accessToken);
-      navigate("/home");
+      navigate("/recommandation");
       Toastify({
         text: "success Login yey",
         style: {
@@ -46,22 +46,22 @@ export default function LoginPage({ url }) {
 
   async function googleLogin(response) {
     console.log(response);
-    
+
     try {
       const { data } = await axios.post(`${url}/google-login`, null, {
         headers: {
           google_token: response.credential,
         },
       });
-      
+
       // const { data } = await axios.post(`${url}/google-login`, null, {
-        //   headers: {
-          //     Authorization: `Bearer ${response.credential}`,
-          //   },
-          // });
-          
-          localStorage.setItem("accessToken", data.accessToken);
-          navigate("/home");
+      //   headers: {
+      //     Authorization: `Bearer ${response.credential}`,
+      //   },
+      // });
+
+      localStorage.setItem("accessToken", data.accessToken);
+      navigate("/recommandation");
     } catch (error) {
       console.log(error);
       Toastify({
@@ -72,7 +72,6 @@ export default function LoginPage({ url }) {
       }).showToast();
     }
   }
-
 
   return (
     <div className="flex w-full h-full m-0 p-0">
@@ -105,11 +104,14 @@ export default function LoginPage({ url }) {
               Sign in
             </button>
             <p className="text-gray-700 mt-2 flex justify-center">
-              Dont have account? {" "}<Link to="/register" className="hover:text-white"> Register </Link>
+              Don't have an account?{" "}
+              <Link to="/register" className="hover:text-white">
+                Register
+              </Link>
             </p>
           </form>
           <div className="divider px-10 text-gray-700">OR</div>
-          <div className=" flex justify-center items-center">
+          <div className="flex justify-center items-center">
             <GoogleLogin
               onSuccess={googleLogin}
               onFailure={(error) => {
@@ -125,12 +127,19 @@ export default function LoginPage({ url }) {
           </div>
         </div>
         <div
-          className="w-1/2 bg-cover bg-center"
+          className="w-1/2 bg-cover bg-center relative"
           style={{
             backgroundImage:
               "url('https://i.pinimg.com/474x/12/c9/58/12c9585085da28925702d9f1222da970.jpg')",
           }}
-        ></div>
+        >
+          <Link
+            to="/home"
+            className="absolute top-2 right-4 text-white text-lg hover:underline"
+          >
+            Back to home?
+          </Link>
+        </div>
       </div>
     </div>
   );

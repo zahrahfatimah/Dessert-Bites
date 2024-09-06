@@ -18,7 +18,7 @@ export default function Home({ url }) {
 
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-      const prompt = `Give me a JSON formatted list of cafes in Jakarta that might sell ${sourceName} like this without json only array of object{ "name": "Kopi Kenangan", "description": "A popular Indonesian coffee chain known for its affordable and delicious coffee and snacks.", "menu": "Oreo Cheesecake" }. Each item in the list should include the cafe's name, a short description of the cafe, and an example of what type of ${sourceName} they may offer. without backtick or grave accen and text json just array and object `;
+      const prompt = `Give me a JSON formatted list of cafes in Jakarta that might sell ${sourceName} like this without json only array of object{ "name": "Kopi Kenangan", "description": "A popular Indonesian coffee chain known for its affordable and delicious coffee and snacks.", "menu": "Oreo Cheesecake" }. Each item in the list should include the cafe's name, a short description of the cafe, and an example of what type of ${sourceName} they may offer  without backtick or grave accen and text json just array and object `;
       const result = await model.generateContent(prompt);
       const text = await result.response.text(); // Dapatkan teks dari respons
       console.log(text);
@@ -133,14 +133,23 @@ export default function Home({ url }) {
             style={{
               backgroundImage:
                 "url('https://i.pinimg.com/474x/82/88/43/8288438a390cf41bd47d8c23eca69f6f.jpg')",
+              //  "url('https://i.pinimg.com/474x/2f/e3/6d/2fe36db1c9f575659ebe80170f1eaf6c.jpg')",
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
           >
             <div className="absolute inset-0 bg-black opacity-30"></div>
-            <h2 className="relative text-5xl font-bold text-white z-10">
-              Sweet Dessert Bites Cafe Finder
-            </h2>
+            <div className="flex flex-col items-center justify-center">
+              <h2 className="relative text-5xl font-bold text-white z-10 text-center">
+                Dessert Bites Find Nearest Cafe
+                <p className="text-[#A87676] text-lg text-white text-center mt-2">
+                  "Here are some cafes around that might have the desserts you
+                  are looking for"
+                  <br />
+                  Hurry on. Your favorite desserts are waiting for you to come.
+                </p>
+              </h2>
+            </div>
 
             {/* Link ke halaman login menggunakan react-router-dom */}
             <Link
@@ -168,11 +177,11 @@ export default function Home({ url }) {
             </button>
           </div>
 
-          <div className="p-8 text-center">
+          {/* <div className="p-8 text-center">
             <p className="text-[#A87676] text-lg font-bold">
               Here are some cafes around that might have dessert you rae looking for:
             </p>
-          </div>
+          </div> */}
 
           {/* Menampilkan hasil suggestion */}
           {suggestions.length > 0 ? (
@@ -180,15 +189,19 @@ export default function Home({ url }) {
               {suggestions.map((cafe, index) => (
                 <div
                   key={index}
-                  className="bg-white rounded-lg shadow-lg p-6 border-2 border-[#E1ACAC] hover:shadow-xl transition-all"
+                  className="bg-white rounded-3xl shadow-lg p-6 border-4 border-[#F7C1C1] hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out"
                 >
-                  <h3 className="text-xl font-semibold text-[#A87676]">
+                  <h3 className="text-xl font-bold text-[#A87676] tracking-wide mb-3">
                     {cafe.name}
                   </h3>
-                  <p className="text-gray-600 mt-2">{cafe.description}</p>
-                  <p className="text-gray-500 mt-2 font-medium">
+                  <p className="text-gray-600 text-sm mt-2">
+                    {cafe.description}
+                  </p>
+                  <p className="text-gray-500 mt-4 font-medium">
                     Special dessert:{" "}
-                    <span className="text-[#A87676]">{cafe.menu}</span>
+                    <span className="text-[#A87676] font-semibold">
+                      {cafe.menu}
+                    </span>
                   </p>
                 </div>
               ))}
